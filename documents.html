@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents - Orchea Documentation System</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="documents-page">
+    <div id="app">
+        <div class="container">
+            <app-header :active-page="'documents'"></app-header>
+            <documents-content></documents-content>
+        </div>
+    </div>
+
+    <!-- Vue Components -->
+    <script src="lib/vue-components/AppHeader.js"></script>
+    <script src="lib/vue-components/DocumentsContent.js"></script>
+    <script src="lib/vue-documents.js"></script>
+</body>
+</html>
