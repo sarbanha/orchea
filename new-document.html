@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Document - Orchea</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <!-- Header with Navigation -->
+            <app-header current-page="new-document"></app-header>
+            
+            <!-- New Document Content -->
+            <new-document-content></new-document-content>
+        </div>
+    </div>
+
+    <!-- Load Components -->
+    <script src="lib/vue-components/AppHeader.js"></script>
+    <script src="lib/vue-components/NewDocumentContent.js"></script>
+    <script src="lib/vue-new-document.js"></script>
+</body>
+</html>
