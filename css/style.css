@@ -1,0 +1,401 @@
+/* Orchea - Shared Stylesheet */
+
+/* Base Styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    color: white;
+    margin-bottom: 50px;
+}
+
+.header h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+/* About page specific header adjustments */
+.about-page .header h1 {
+    font-size: 2.5em;
+}
+
+.about-page .header p {
+    font-size: 1.1em;
+}
+
+.about-page .container {
+    max-width: 900px;
+}
+
+/* Navigation Styles */
+.menu-bar {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.menu-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.menu-item {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.menu-item:hover {
+    text-decoration: underline;
+}
+
+.menu-item.active {
+    text-decoration: underline;
+}
+
+.menu-separator {
+    color: white;
+    margin: 0 15px;
+    opacity: 0.7;
+}
+
+/* Repository Section Styles */
+.repository-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.file-list-box, .preview-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    min-height: 400px;
+}
+
+.file-list-box h3, .preview-box h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Button Styles */
+.new-file-btn {
+    background: none;
+    color: #6c757d;
+    border: none;
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.new-file-btn:hover {
+    color: #007bff;
+    background: rgba(0, 123, 255, 0.1);
+}
+
+.edit-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px 8px;
+    margin-right: 8px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+    background: #f8f9fa;
+    color: #28a745;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px 8px;
+    margin-left: 8px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: #f8f9fa;
+    color: #dc3545;
+}
+
+.save-btn, .cancel-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.save-btn {
+    background: #28a745;
+    color: white;
+}
+
+.save-btn:hover {
+    background: #218838;
+}
+
+.cancel-btn {
+    background: #6c757d;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background: #5a6268;
+}
+
+.demo-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    margin: 10px;
+}
+
+.demo-button:hover {
+    transform: scale(1.05);
+}
+
+/* File List Styles */
+.file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-item:hover {
+    background-color: #f8f9fa;
+    border-color: #667eea;
+}
+
+.file-item.active {
+    background-color: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.file-item.active .edit-btn,
+.file-item.active .delete-btn {
+    color: rgba(255,255,255,0.8);
+}
+
+.file-item.active .edit-btn:hover,
+.file-item.active .delete-btn:hover {
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+.file-name {
+    font-weight: 500;
+    flex: 1;
+}
+
+/* Content Areas */
+.preview-content {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    min-height: 300px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    transition: opacity 0.2s ease;
+}
+
+.content-section {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.content-section h1 {
+    color: #2c3e50;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.content-section h2 {
+    color: #34495e;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.content-section h3 {
+    color: #7f8c8d;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.content-section code {
+    background: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.content-section pre {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 15px 0;
+}
+
+.content-section pre code {
+    background: none;
+    padding: 0;
+    color: #ecf0f1;
+}
+
+.content-section ul, .content-section ol {
+    margin: 15px 0;
+    padding-left: 30px;
+}
+
+.content-section li {
+    margin: 8px 0;
+}
+
+.content-section blockquote {
+    border-left: 4px solid #3498db;
+    margin: 20px 0;
+    padding-left: 20px;
+    font-style: italic;
+    color: #7f8c8d;
+}
+
+/* Editor Styles */
+.editor-textarea {
+    width: 100%;
+    min-height: 300px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.editor-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Loading and Error States */
+.loading, .loading-text {
+    text-align: center;
+    color: #6c757d;
+    padding: 40px;
+    font-style: italic;
+}
+
+.error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #f5c6cb;
+    margin: 20px 0;
+}
+
+/* Demo Section */
+.demo-section {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.demo-section h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Vue.js specific styles */
+.message {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
