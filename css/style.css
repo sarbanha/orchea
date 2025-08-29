@@ -24,15 +24,48 @@ body {
     margin-bottom: 50px;
 }
 
+.header-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 4em;
+    background: linear-gradient(135deg, #fff 0%, #e8f4f8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.2));
+    animation: logoGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow {
+    0% {
+        filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.2));
+    }
+    100% {
+        filter: drop-shadow(0 4px 16px rgba(255, 255, 255, 0.4));
+    }
+}
+
+.brand-text {
+    text-align: left;
+}
+
 .header h1 {
     font-size: 3em;
-    margin-bottom: 10px;
+    margin: 0;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .header p {
     font-size: 1.2em;
     opacity: 0.9;
+    margin: 5px 0 0 0;
 }
 
 /* Navigation Styles */
@@ -1406,6 +1439,19 @@ body {
     
     .header h1 {
         font-size: 2.5em;
+    }
+    
+    .header-brand {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .brand-text {
+        text-align: center;
+    }
+    
+    .logo {
+        font-size: 3em;
     }
     
     .repository-section {
