@@ -1,4 +1,4 @@
-/* Orchea - Shared Stylesheet */
+/* Orchea - Universal Stylesheet */
 
 /* Base Styles */
 body {
@@ -17,7 +17,7 @@ body {
     padding: 40px 20px;
 }
 
-/* Header Styles */
+/* Header Styles - Universal for all pages */
 .header {
     text-align: center;
     color: white;
@@ -33,19 +33,6 @@ body {
 .header p {
     font-size: 1.2em;
     opacity: 0.9;
-}
-
-/* About page specific header adjustments */
-.about-page .header h1 {
-    font-size: 2.5em;
-}
-
-.about-page .header p {
-    font-size: 1.1em;
-}
-
-.about-page .container {
-    max-width: 900px;
 }
 
 /* Navigation Styles */
@@ -165,20 +152,21 @@ body {
     color: #dc3545;
 }
 
-.save-btn, .cancel-btn {
+.save-btn, .cancel-btn, .create-btn {
     padding: 8px 16px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.save-btn {
+.save-btn, .create-btn {
     background: #28a745;
     color: white;
 }
 
-.save-btn:hover {
+.save-btn:hover, .create-btn:hover {
     background: #218838;
 }
 
@@ -290,12 +278,24 @@ body {
     margin-bottom: 10px;
 }
 
+.content-section h4 {
+    color: #34495e;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.content-section p {
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
 .content-section code {
     background: #f8f9fa;
     padding: 2px 6px;
     border-radius: 3px;
     font-family: 'Courier New', monospace;
     font-size: 0.9em;
+    color: #e74c3c;
 }
 
 .content-section pre {
@@ -325,9 +325,68 @@ body {
 .content-section blockquote {
     border-left: 4px solid #3498db;
     margin: 20px 0;
-    padding-left: 20px;
+    padding: 15px 20px;
     font-style: italic;
     color: #7f8c8d;
+    background: #f8f9fa;
+    border-radius: 0 5px 5px 0;
+}
+
+.content-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.content-section th,
+.content-section td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.content-section th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.content-section a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.content-section a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
 }
 
 /* Editor Styles */
@@ -386,6 +445,7 @@ body {
     border-radius: 5px;
     margin-bottom: 15px;
     font-weight: 500;
+    transition: opacity 0.3s ease;
 }
 
 .message.success {
@@ -398,4 +458,35 @@ body {
     background: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
+}
+
+.message.info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 15px;
+    }
+    
+    .header h1 {
+        font-size: 2.5em;
+    }
+    
+    .repository-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .menu-nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .menu-separator {
+        display: none;
+    }
 }
