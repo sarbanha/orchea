@@ -4,7 +4,7 @@ A modern Vue.js web application for creating and managing do4. **Save changes**:
 
 ### **Managing Content**
 
-1. **Repository Management**:ts from modular Markdown snippets with YAML-based configuration. Build professional documentation by combining reusable content blocks through an intuitive web interface.
+ 1. **Repository Management**:ts from modular Markdown snippets with YAML-based configuration. Build professional documentation by combining reusable content blocks through an intuitive web interface.
 
 ## Directory Structure
 
@@ -21,11 +21,12 @@ Orchea/
 ## Core Features
 
 ### **Document Management**
-- **Create Documents**: Visual interface for assembling documents from repository files
-- **Edit Documents**: Modify document configuration, content selection, and metadata
-- **Delete Documents**: Remove documents with confirmation dialogs
-- **Browse Documents**: View all documents with search and filtering capabilities
-- **Download Markdown**: Export complete documents as combined Markdown files
+
+ - **Create Documents**: Visual interface for assembling documents from repository files
+ - **Edit Documents**: Modify document configuration, content selection, and metadata
+ - **Delete Documents**: Remove documents with confirmation dialogs
+ - **Browse Documents**: View all documents with search and filtering capabilities
+ - **Download Markdown**: Export complete documents as combined Markdown files
 
 ### **Content Management**
 - **Repository Browser**: Manage all Markdown files in a centralized repository
