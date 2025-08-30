@@ -1282,6 +1282,41 @@ body {
         overflow: hidden;
     }
 
+    .files-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px 20px;
+    }
+
+    .files-header h5 {
+        margin: 0;
+        font-size: 1.1em;
+        font-weight: 600;
+    }
+
+    .refresh-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .refresh-btn:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .refresh-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
     .available-files h5,
     .selected-files h5 {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
