@@ -204,151 +204,16 @@ markdown_files:
 ${markdown_files.map(file => `  - ${file}`).join('\n')}
 `;
 
-        // Generate index.html content
-        const indexHtmlContent = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${title} - Orchea Documentation System</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f8f9fa;
+        // Load and process index.html template
+        const templatePath = path.join(__dirname, 'templates', 'document-index.html');
+        let indexHtmlContent;
+        try {
+            const template = await fs.readFile(templatePath, 'utf8');
+            indexHtmlContent = template.replace('{{DOCUMENT_TITLE}}', title);
+        } catch (templateError) {
+            console.error('Error loading template:', templateError);
+            throw new Error('Failed to load document template');
         }
-
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #e9ecef;
-        }
-
-        .header h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .metadata {
-            background: #f8f9fa;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 0.9em;
-            color: #6c757d;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .content h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-        }
-
-        .content h2 {
-            color: #34495e;
-            margin-top: 30px;
-        }
-
-        .content h3 {
-            color: #7f8c8d;
-        }
-
-        .content code {
-            background: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .content pre {
-            background: #2c3e50;
-            color: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-
-        .content pre code {
-            background: none;
-            padding: 0;
-            color: #ecf0f1;
-        }
-
-        .content ul, .content ol {
-            margin: 15px 0;
-            padding-left: 30px;
-        }
-
-        .content li {
-            margin: 5px 0;
-        }
-
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 5px;
-            border: 1px solid #f5c6cb;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #6c757d;
-        }
-
-        .loading::after {
-            content: '';
-            animation: loading 1.5s infinite;
-        }
-
-        @keyframes loading {
-            0%, 50% { content: 'Loading'; }
-            60% { content: 'Loading.'; }
-            70% { content: 'Loading..'; }
-            80%, 100% { content: 'Loading...'; }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Orchea Documentation System</h1>
-            <div id="metadata"></div>
-        </div>
-        
-        <div id="content" class="content">
-            <div class="loading">Loading</div>
-        </div>
-    </div>
-
-    <!-- Load JavaScript libraries -->
-    <script src="../../lib/yaml-parser.js"></script>
-    <script src="../../lib/markdown-renderer.js"></script>
-    <script src="../../lib/document-builder.js"></script>
-
-    <script>
-        // Initialize and render the document
-        document.addEventListener('DOMContentLoaded', async function() {
-            const builder = new DocumentBuilder();
-            await builder.renderDocument('./config.yaml', 'content');
-        });
-    </script>
-</body>
-</html>`;
 
         // Write config.yaml file
         const configPath = path.join(documentPath, 'config.yaml');
@@ -458,8 +323,25 @@ markdown_files:
 ${markdown_files.map(file => `  - ${file}`).join('\n')}
 `;
 
+        // Load and process index.html template with updated title
+        const templatePath = path.join(__dirname, 'templates', 'document-index.html');
+        let indexHtmlContent;
+        try {
+            const template = await fs.readFile(templatePath, 'utf8');
+            indexHtmlContent = template.replace('{{DOCUMENT_TITLE}}', title);
+            console.log(`Template loaded and processed for document: ${slug}`);
+        } catch (templateError) {
+            console.error('Error loading template:', templateError);
+            throw new Error('Failed to load document template');
+        }
+
         // Save the updated config.yaml file
         await fs.writeFile(configPath, yamlContent, 'utf8');
+
+        // Overwrite the index.html file with fresh template content
+        const indexPath = path.join(documentPath, 'index.html');
+        await fs.writeFile(indexPath, indexHtmlContent, 'utf8');
+        console.log(`Index.html overwritten from template for document: ${slug}`);
 
         console.log(`Document config updated: ${slug}`);
         res.json({
@@ -467,12 +349,50 @@ ${markdown_files.map(file => `  - ${file}`).join('\n')}
             message: 'Document configuration updated successfully',
             slug,
             path: `documents/${slug}`,
-            config_updated: true
+            config_updated: true,
+            index_updated: true,
+            files_updated: ['config.yaml', 'index.html']
         });
 
     } catch (error) {
         console.error('Error updating document:', error);
         res.status(500).json({ error: 'Failed to update document' });
+    }
+});
+
+// Delete a document
+app.delete('/api/documents/:slug', async (req, res) => {
+    try {
+        const slug = req.params.slug;
+
+        // Security check: ensure slug is safe
+        if (!slug || slug.includes('..') || slug.includes('/') || slug.includes('\\')) {
+            return res.status(400).json({ error: 'Invalid document slug' });
+        }
+
+        const documentPath = path.join(__dirname, 'documents', slug);
+        
+        // Check if document exists
+        try {
+            await fs.access(documentPath);
+        } catch (error) {
+            return res.status(404).json({ error: 'Document not found' });
+        }
+
+        // Delete the entire document directory recursively
+        await fs.rm(documentPath, { recursive: true, force: true });
+
+        console.log(`Document deleted: ${slug}`);
+        res.json({
+            success: true,
+            message: 'Document deleted successfully',
+            slug,
+            deleted_path: `documents/${slug}`
+        });
+
+    } catch (error) {
+        console.error('Error deleting document:', error);
+        res.status(500).json({ error: 'Failed to delete document' });
     }
 });
 
