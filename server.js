@@ -1,3 +1,17 @@
+/**
+ * Project:   Orchea - Modular Documentation System
+ * File:      server.js
+ * Author:    Martin A. Sarbanha
+ * Version:   1.0
+ * Date:      2025-08-30
+ *
+ * Description:
+ *   Express.js server providing REST API for document management, file operations,
+ *   and repository management. Handles document creation, editing, and assembly.
+ *
+ * License: MIT
+ */
+
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs').promises;
