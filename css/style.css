@@ -1493,6 +1493,78 @@ body {
     color: #667eea;
 }
 
+/* Font Awesome Integration */
+.fa, .fas, .far, .fal, .fab {
+    display: inline-block;
+    font-size: inherit;
+    margin-right: 0.3em;
+    vertical-align: middle;
+}
+
+.fa-spin {
+    animation: fa-spin 1s infinite linear;
+}
+
+@keyframes fa-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Font Awesome sizing utilities */
+.fa.icon-small, .fas.icon-small, .far.icon-small {
+    font-size: 1em;
+    margin-right: 0.2em;
+}
+
+.fa.icon-medium, .fas.icon-medium, .far.icon-medium {
+    font-size: 1.5em;
+    margin-right: 0.4em;
+}
+
+.fa.icon-large, .fas.icon-large, .far.icon-large {
+    font-size: 2em;
+    margin-right: 0.5em;
+}
+
+/* Font Awesome color utilities */
+.fa.icon-primary, .fas.icon-primary, .far.icon-primary {
+    color: #667eea;
+}
+
+.fa.icon-success, .fas.icon-success, .far.icon-success {
+    color: #28a745;
+}
+
+.fa.icon-danger, .fas.icon-danger, .far.icon-danger {
+    color: #dc3545;
+}
+
+.fa.icon-warning, .fas.icon-warning, .far.icon-warning {
+    color: #ffc107;
+}
+
+.fa.icon-secondary, .fas.icon-secondary, .far.icon-secondary {
+    color: #6c757d;
+}
+
+/* Button Font Awesome icons should be smaller */
+button .fa, button .fas, button .far {
+    margin-right: 0.2em;
+    font-size: 0.9em;
+}
+
+/* Header Font Awesome icons should be larger */
+h1 .fa, h1 .fas, h1 .far,
+h2 .fa, h2 .fas, h2 .far,
+h3 .fa, h3 .fas, h3 .far {
+    margin-right: 0.3em;
+    font-size: 0.9em;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
