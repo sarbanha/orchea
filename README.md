@@ -1,6 +1,10 @@
 # Orchea - Modular Documentation System
 
-A modern Vue.js web application for creating and managing documents from modular Markdown snippets with YAML-based configuration. Build professional documentation by combining reusable content blocks through an intuitive web interface.
+A modern Vue.js web application for creating and managing do4. **Save changes**: Click "Update Document" to apply modifications
+
+### **Managing Content**
+
+1. **Repository Management**:ts from modular Markdown snippets with YAML-based configuration. Build professional documentation by combining reusable content blocks through an intuitive web interface.
 
 ## Directory Structure
 
@@ -16,34 +20,34 @@ Orchea/
 
 ## Core Features
 
-### 🏗️ **Document Management**
+### **Document Management**
 - **Create Documents**: Visual interface for assembling documents from repository files
 - **Edit Documents**: Modify document configuration, content selection, and metadata
 - **Delete Documents**: Remove documents with confirmation dialogs
 - **Browse Documents**: View all documents with search and filtering capabilities
 - **Download Markdown**: Export complete documents as combined Markdown files
 
-### 📝 **Content Management**
+### **Content Management**
 - **Repository Browser**: Manage all Markdown files in a centralized repository
 - **File Editor**: Built-in editor for creating and modifying Markdown content
 - **Drag & Drop**: Intuitive interface for selecting and ordering document content
 - **Real-time Preview**: Live preview of Markdown content as you type
 - **File Operations**: Create, edit, save, and delete Markdown files
 
-### ⚙️ **Configuration System**
+### **Configuration System**
 - **YAML-based**: Simple YAML configuration for document metadata
 - **Template Engine**: Centralized template system for consistent document styling
 - **Version Control**: Track document versions and publication dates
 - **Metadata Management**: Document titles, versions, dates, and file lists
 
-### 🎨 **Modern Interface**
+### **Modern Interface**
 - **Vue.js Frontend**: Reactive, component-based user interface
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Professional Styling**: Clean, modern design with gradient themes
 - **Drag & Drop UI**: Visual content selection and reordering
 - **Loading States**: Clear feedback during operations
 
-### 🔧 **Backend API**
+### **Backend API**
 - **Node.js Server**: Full-featured backend with RESTful API
 - **File Operations**: Secure file reading, writing, and management
 - **Document CRUD**: Complete Create, Read, Update, Delete operations
@@ -71,15 +75,15 @@ Orchea/
 4. **Open your browser** to `http://localhost:3000`
 
 The Node.js server provides:
-- 🌐 **Web application serving** (static files + Vue.js frontend)
-- 💾 **Persistent file operations** with real-time updates
-- 🔒 **Secure API endpoints** with validation and error handling
-- 📝 **Full CRUD operations** for documents and Markdown files
-- 🎨 **Template processing** for consistent document styling
+- **Web application serving** (static files + Vue.js frontend)
+- **Persistent file operations** with real-time updates
+- **Secure API endpoints** with validation and error handling
+- **Full CRUD operations** for documents and Markdown files
+- **Template processing** for consistent document styling
 
 ## How to Use
 
-### 📖 **Creating Your First Document**
+### **Creating Your First Document**
 
 1. **Navigate to "New Document"** from the main menu
 2. **Fill in document details**:
@@ -91,7 +95,7 @@ The Node.js server provides:
    - Reorder files by dragging within the selected area
 4. **Create document**: Click "Create Document" to generate your documentation
 
-### ✏️ **Editing Documents**
+### **Editing Documents**
 
 1. **Browse documents** on the Documents page
 2. **Click "Edit Configuration"** for any document
@@ -114,7 +118,7 @@ The Node.js server provides:
    - Use descriptive filenames (e.g., `installation-guide.md`)
    - Maintain consistent formatting across files
 
-### 🔍 **Viewing Documents**
+### **Viewing Documents**
 
 1. **Document Browser**: View all documents with metadata on the Documents page
 2. **Inline Preview**: See document content directly in the browser interface

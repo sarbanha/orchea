@@ -559,6 +559,7 @@ body {
     font-size: 1.1em;
     color: #495057;
     margin: 0 auto 40px;
+    padding: 20px 0;
     line-height: 1.7;
 }
 
@@ -1879,4 +1880,60 @@ h3 .fa, h3 .fas, h3 .far {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+/* Footer Styles */
+.app-footer {
+    color: #343a40;
+    margin-top: 0;
+    padding: 0;
+    position: relative;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.footer-copyright {
+    color: #343a40;
+    font-size: 0.9em;
+}
+
+.footer-copyright p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.footer-link {
+    color: #212529;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin: 0 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+}
+
+.footer-link:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.footer-link i {
+    font-size: 1em;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer-copyright {
+        font-size: 0.8em;
+    }
+    
+    .footer-copyright p {
+        line-height: 1.6;
+    }
 }
