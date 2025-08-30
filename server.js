@@ -3,8 +3,11 @@ const cors = require('cors');
 const fs = require('fs').promises;
 const path = require('path');
 
+// Load YAML Parser
+const YAMLParser = require('./lib/yaml-parser.js');
+
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -370,6 +373,109 @@ ${markdown_files.map(file => `  - ${file}`).join('\n')}
     }
 });
 
+// Get config data for a specific document
+app.get('/api/documents/:slug/config', async (req, res) => {
+    try {
+        const slug = req.params.slug;
+        
+        // Security check: ensure slug is safe
+        if (!slug || slug.includes('..') || slug.includes('/') || slug.includes('\\')) {
+            return res.status(400).json({ error: 'Invalid document slug' });
+        }
+        
+        const documentPath = path.join(__dirname, 'documents', slug);
+        const configPath = path.join(documentPath, 'config.yaml');
+        
+        // Check if document directory exists
+        try {
+            await fs.access(documentPath);
+        } catch (error) {
+            return res.status(404).json({ error: 'Document not found' });
+        }
+        
+        // Read and parse config file
+        try {
+            const configContent = await fs.readFile(configPath, 'utf8');
+            
+            // Parse YAML content using YAMLParser
+            const parsedConfig = YAMLParser.parse(configContent);
+            const config = {
+                slug,
+                document_title: parsedConfig.document_title || slug,
+                title: parsedConfig.document_title || slug, // alias for compatibility
+                version: parsedConfig.version || '1.0',
+                date: parsedConfig.date || 'Unknown',
+                markdown_files: parsedConfig.markdown_files || [],
+                path: `documents/${slug}`,
+                raw_yaml: configContent
+            };
+            
+            console.log(`Config fetched for document: ${slug}`);
+            res.json(config);
+            
+        } catch (configError) {
+            console.error(`Error reading config for ${slug}:`, configError);
+            res.status(500).json({ error: 'Failed to read document configuration' });
+        }
+        
+    } catch (error) {
+        console.error('Error fetching document config:', error);
+        res.status(500).json({ error: 'Failed to fetch document configuration' });
+    }
+});
+
+// Update an existing document's config
+app.put('/api/documents/:slug/update', async (req, res) => {
+    try {
+        const slug = req.params.slug;
+        const { title, version, date, markdown_files } = req.body;
+
+        // Validate required fields
+        if (!title || !version || !date || !Array.isArray(markdown_files)) {
+            return res.status(400).json({ error: 'Missing required fields: title, version, date, markdown_files' });
+        }
+
+        // Security check: ensure slug is safe
+        if (!slug || slug.includes('..') || slug.includes('/') || slug.includes('\\')) {
+            return res.status(400).json({ error: 'Invalid document slug' });
+        }
+
+        const documentPath = path.join(__dirname, 'documents', slug);
+        const configPath = path.join(documentPath, 'config.yaml');
+        
+        // Check if document exists
+        try {
+            await fs.access(documentPath);
+        } catch (error) {
+            return res.status(404).json({ error: 'Document not found' });
+        }
+
+        // Generate updated YAML config content
+        const yamlContent = `document_title: "${title}"
+version: "${version}"
+date: "${date}"
+markdown_files:
+${markdown_files.map(file => `  - ${file}`).join('\n')}
+`;
+
+        // Save the updated config.yaml file
+        await fs.writeFile(configPath, yamlContent, 'utf8');
+
+        console.log(`Document config updated: ${slug}`);
+        res.json({
+            success: true,
+            message: 'Document configuration updated successfully',
+            slug,
+            path: `documents/${slug}`,
+            config_updated: true
+        });
+
+    } catch (error) {
+        console.error('Error updating document:', error);
+        res.status(500).json({ error: 'Failed to update document' });
+    }
+});
+
 // Get list of documents
 app.get('/api/documents', async (req, res) => {
     try {
@@ -435,13 +541,14 @@ const server = app.listen(PORT, () => {
     console.log(`📡 Server running on http://localhost:${PORT}`);
     console.log(`📁 Repository path: ${path.join(__dirname, 'repository')}`);
     console.log(`🔧 API endpoints:`);
-    console.log(`   GET    /api/files           - List all files`);
-    console.log(`   GET    /api/files/:filename - Get file content`);
-    console.log(`   PUT    /api/files/:filename - Save file content`);
-    console.log(`   POST   /api/files           - Create new file`);
-    console.log(`   DELETE /api/files/:filename - Delete file`);
-    console.log(`   POST   /api/documents       - Create new document`);
-    console.log(`   GET    /api/documents       - List all documents`);
+    console.log(`   GET    /api/files              - List all files`);
+    console.log(`   GET    /api/files/:filename    - Get file content`);
+    console.log(`   PUT    /api/files/:filename    - Save file content`);
+    console.log(`   POST   /api/files              - Create new file`);
+    console.log(`   DELETE /api/files/:filename    - Delete file`);
+    console.log(`   POST   /api/documents          - Create new document`);
+    console.log(`   GET    /api/documents          - List all documents`);
+    console.log(`   GET    /api/documents/:slug/config - Get document config`);
     console.log(`🌐 Open http://localhost:${PORT} to view the application`);
     console.log('🔄 Press Ctrl+C to stop the server');
     console.log('-'.repeat(60));

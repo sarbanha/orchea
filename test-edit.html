@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Edit Document - Orchea</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h2>Test Edit Document</h2>
+            
+            <div v-if="!documentLoaded">
+                <button @click="loadTestDocument" class="btn btn-primary">Load Test Document</button>
+            </div>
+            
+            <div v-if="documentLoaded">
+                <h3>Document: {{ documentConfig.title }}</h3>
+                <p>Selected files count: {{ documentConfig.markdown_files.length }}</p>
+                
+                <div class="selected-files">
+                    <h4>Selected Files:</h4>
+                    <div v-if="documentConfig.markdown_files.length === 0">
+                        No files selected
+                    </div>
+                    <div v-else>
+                        <div v-for="(file, index) in documentConfig.markdown_files" :key="file" class="file-pill">
+                            {{ file }}
+                            <button @click="removeFile(file)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button @click="addTestFile" class="btn btn-secondary">Add Test File</button>
+                
+                <div style="margin-top: 20px; padding: 10px; background: #f0f0f0;">
+                    <strong>Debug:</strong><br>
+                    Raw data: {{ JSON.stringify(documentConfig.markdown_files) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    documentLoaded: false,
+                    documentConfig: {
+                        title: '',
+                        slug: '',
+                        version: '',
+                        date: '',
+                        markdown_files: []
+                    }
+                }
+            },
+            methods: {
+                loadTestDocument() {
+                    // Simulate loading a document
+                    const testConfig = {
+                        title: "Sample Document MAS",
+                        slug: "sample-document",
+                        version: "1.0",
+                        date: "2025-08-29",
+                        markdown_files: ["intro.md", "getting-started.md", "configuration.md", "conclusion.md"]
+                    };
+                    
+                    // Test different approaches
+                    this.documentConfig.title = testConfig.title;
+                    this.documentConfig.slug = testConfig.slug;
+                    this.documentConfig.version = testConfig.version;
+                    this.documentConfig.date = testConfig.date;
+                    
+                    // Method 1: Direct assignment
+                    this.documentConfig.markdown_files = [...testConfig.markdown_files];
+                    
+                    this.documentLoaded = true;
+                    
+                    console.log('Test document loaded:', this.documentConfig);
+                    console.log('Selected files:', this.documentConfig.markdown_files);
+                },
+                
+                addTestFile() {
+                    this.documentConfig.markdown_files.push(`test-file-${Date.now()}.md`);
+                    console.log('Added file, new array:', this.documentConfig.markdown_files);
+                },
+                
+                removeFile(file) {
+                    const index = this.documentConfig.markdown_files.indexOf(file);
+                    if (index > -1) {
+                        this.documentConfig.markdown_files.splice(index, 1);
+                    }
+                    console.log('Removed file, new array:', this.documentConfig.markdown_files);
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
