@@ -1304,27 +1304,11 @@ body {
         color: #2c3e50;
     }
 
-    .selected-file-item {
-        display: flex;
-        align-items: center;
-        padding: 10px 15px;
-        background: #f8f9fa;
-        border-radius: 8px;
-        margin-bottom: 8px;
-        border: 1px solid #e9ecef;
-    }
-
     .file-order {
         color: #667eea;
         font-weight: 600;
         margin-right: 10px;
         min-width: 25px;
-    }
-
-    .selected-file-item .file-name {
-        flex: 1;
-        color: #2c3e50;
-        font-weight: 500;
     }
 
     .remove-file-btn,
@@ -1431,7 +1415,51 @@ body {
         padding: 0;
     }
 
-    /* Responsive Design */
+    /* Pill-style draggable files */
+.file-pill {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 25px;
+    padding: 10px 16px;
+    margin: 6px 0;
+    display: flex;
+    align-items: center;
+    cursor: grab;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.file-pill:hover {
+    background-color: #e9ecef;
+    border-color: #667eea;
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.2);
+    transform: translateY(-1px);
+}
+
+.file-pill:active,
+.file-pill.dragging {
+    cursor: grabbing;
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.file-pill .file-drag-handle {
+    color: #6c757d;
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+.file-pill .file-name {
+    color: #495057;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+.file-pill:hover .file-drag-handle {
+    color: #667eea;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .container {
         padding: 20px 15px;
