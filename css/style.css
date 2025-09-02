@@ -2459,11 +2459,39 @@ h3 .fa, h3 .fas, h3 .far {
     cursor: pointer;
     transition: all 0.3s ease;
     border: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    user-select: none;
 }
 
 .selected-file-tag:hover {
     background: #5a67d8;
     transform: translateY(-1px);
+}
+
+.selected-file-tag.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.selected-file-tags.is-dragging .selected-file-tag:not(.dragging) {
+    opacity: 0.7;
+}
+
+.selected-file-tag .drag-handle {
+    opacity: 0.6;
+    font-size: 0.7em;
+    cursor: grab;
+}
+
+.selected-file-tag:hover .drag-handle {
+    opacity: 1;
+}
+
+.selected-file-tag:active .drag-handle {
+    cursor: grabbing;
 }
 
 .no-files-selected {
@@ -2671,6 +2699,11 @@ h3 .fa, h3 .fas, h3 .far {
     .selected-file-tag {
         font-size: 0.75em;
         padding: 2px 6px;
+        gap: 2px;
+    }
+    
+    .selected-file-tag .drag-handle {
+        font-size: 0.6em;
     }
     
     .preview-header {
