@@ -335,9 +335,12 @@ body {
 }
 
 .content-section h3 {
-    color: #7f8c8d;
-    margin-top: 25px;
-    margin-bottom: 10px;
+    color: #34495e;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    line-height: 1.7;
+    padding: 0;
+    border: none;
 }
 
 .content-section h4 {
@@ -1057,9 +1060,12 @@ body {
     }
 
     .document-content h3 {
-        color: #6c757d;
-        margin-top: 25px;
-        margin-bottom: 12px;
+        color: #495057;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        line-height: 1.7;
+        padding: 0;
+        border: none;
     }
 
     .document-content code {
@@ -2352,6 +2358,15 @@ h3 .fa, h3 .fas, h3 .far {
     margin-bottom: 0.5em;
 }
 
+.preview-markdown h3 {
+    color: #2c3e50;
+    font-size: 1.1em;
+    margin-bottom: 1em;
+    line-height: 1.6;
+    padding: 0;
+    border: none;
+}
+
 .preview-markdown h1 {
     border-bottom: 2px solid #e9ecef;
     padding-bottom: 0.5em;
@@ -2564,9 +2579,12 @@ h3 .fa, h3 .fas, h3 .far {
 }
 
 .final-preview-markdown h3 {
-    color: #6c757d;
-    margin-top: 25px;
-    margin-bottom: 12px;
+    color: #495057;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    line-height: 1.7;
+    padding: 0;
+    border: none;
 }
 
 .final-preview-markdown p {

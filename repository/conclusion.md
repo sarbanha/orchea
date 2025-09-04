@@ -1,4 +1,4 @@
-## Conclusion
+### Conclusion
 
 This modular approach to documentation allows for:
 
