@@ -1,5 +1,4 @@
-### Conclusion
-
+## Conclusion
 This modular approach to documentation allows for:
 
 - **Reusability**: Snippets can be used across multiple documents
