@@ -315,6 +315,7 @@ body {
 
 .preview-content h1 {
     color: #2c3e50;
+    font-size: 2em;
     padding: 0;
     border: none;
     margin-bottom: 0;
@@ -396,6 +397,7 @@ body {
 
 .content-section h1 {
     color: #2c3e50;
+    font-size: 2em;
     padding: 0;
     border: none;
     margin-bottom: 0;
@@ -1134,6 +1136,7 @@ body {
 
     .document-content h1 {
         color: #2c3e50;
+        font-size: 2em;
         padding: 0;
         border: none;
         margin-bottom: 0;
@@ -2467,6 +2470,7 @@ h3 .fa, h3 .fas, h3 .far {
 }
 
 .preview-markdown h1 {
+    font-size: 2em;
     padding: 0;
     border: none;
     margin-bottom: 0;
@@ -2676,6 +2680,7 @@ h3 .fa, h3 .fas, h3 .far {
 
 .final-preview-markdown h1 {
     color: #2c3e50;
+    font-size: 2em;
     padding: 0;
     border: none;
     margin-bottom: 0;
