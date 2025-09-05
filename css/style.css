@@ -318,13 +318,12 @@ body {
     font-size: 2em;
     padding: 0;
     border: none;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 .preview-content h2 {
     color: #34495e;
-    margin-top: 30px;
-    margin-bottom: 0;
+    margin: 0;
     padding: 0;
     border: none;
 }
@@ -332,7 +331,7 @@ body {
 .preview-content h3 {
     color: #34495e;
     font-size: 1.1em;
-    margin-bottom: 0;
+    margin: 0;
     line-height: 1.7;
     padding: 0;
     border: none;
@@ -342,7 +341,7 @@ body {
 .preview-content h5,
 .preview-content h6 {
     color: #34495e;
-    margin-bottom: 0;
+    margin: 0;
     padding: 0;
     border: none;
 }
@@ -361,6 +360,8 @@ body {
     padding: 2px 6px;
     border-radius: 3px;
     font-family: 'Courier New', monospace;
+    border: none;
+    margin: 0;
 }
 
 .preview-content pre {
@@ -369,22 +370,36 @@ body {
     padding: 15px;
     border-radius: 5px;
     overflow-x: auto;
-    margin: 20px 0;
+    margin: 0;
+    border: none;
 }
 
 .preview-content pre code {
     background: none;
     color: inherit;
     padding: 0;
+    margin: 0;
+    border: none;
 }
 
 .preview-content ul, .preview-content ol {
-    margin: 15px 0;
+    margin: 0;
+    padding: 0;
+    border: none;
     padding-left: 25px;
 }
 
 .preview-content li {
-    margin-bottom: 8px;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.preview-content p {
+    margin: 0;
+    padding: 0;
+    border: none;
+    line-height: 1.6;
 }
 
 .content-section {
@@ -400,13 +415,12 @@ body {
     font-size: 2em;
     padding: 0;
     border: none;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 .content-section h2 {
     color: #34495e;
-    margin-top: 30px;
-    margin-bottom: 0;
+    margin: 0;
     padding: 0;
     border: none;
 }
@@ -414,7 +428,7 @@ body {
 .content-section h3 {
     color: #34495e;
     font-size: 1.1em;
-    margin-bottom: 0;
+    margin: 0;
     line-height: 1.7;
     padding: 0;
     border: none;
@@ -422,24 +436,29 @@ body {
 
 .content-section h4 {
     color: #34495e;
-    margin-top: 20px;
-    margin-bottom: 0;
+    margin: 0;
     padding: 0;
     border: none;
 }
 
 .content-section p {
-    margin-bottom: 15px;
+    margin: 0;
+    padding: 0;
+    border: none;
     line-height: 1.7;
 }
 
-.content-section h1 + p,
-.content-section h2 + p,
-.content-section h3 + p,
-.content-section h4 + p,
-.content-section h5 + p,
-.content-section h6 + p {
-    margin-top: 0;
+.content-section ul, .content-section ol {
+    margin: 0;
+    padding: 0;
+    border: none;
+    padding-left: 25px;
+}
+
+.content-section li {
+    margin: 0;
+    padding: 0;
+    border: none;
 }
 
 .content-section code {
@@ -449,6 +468,8 @@ body {
     font-family: 'Courier New', monospace;
     font-size: 0.9em;
     color: #e74c3c;
+    border: none;
+    margin: 0;
 }
 
 .content-section pre {
@@ -457,13 +478,25 @@ body {
     padding: 15px;
     border-radius: 5px;
     overflow-x: auto;
-    margin: 15px 0;
+    margin: 0;
+    border: none;
 }
 
 .content-section pre code {
     background: none;
     padding: 0;
     color: #ecf0f1;
+    margin: 0;
+    border: none;
+}
+
+.content-section h1 + p,
+.content-section h2 + p,
+.content-section h3 + p,
+.content-section h4 + p,
+.content-section h5 + p,
+.content-section h6 + p {
+    margin-top: 0;
 }
 
 .content-section ul, .content-section ol {
@@ -1139,13 +1172,12 @@ body {
         font-size: 2em;
         padding: 0;
         border: none;
-        margin-bottom: 0;
+        margin: 0;
     }
 
     .document-content h2 {
         color: #495057;
-        margin-top: 30px;
-        margin-bottom: 0;
+        margin: 0;
         padding: 0;
         border: none;
     }
@@ -1153,7 +1185,7 @@ body {
     .document-content h3 {
         color: #495057;
         font-size: 1.1em;
-        margin-bottom: 0;
+        margin: 0;
         line-height: 1.7;
         padding: 0;
         border: none;
@@ -1165,6 +1197,8 @@ body {
         border-radius: 4px;
         font-family: 'Courier New', monospace;
         font-size: 0.9em;
+        border: none;
+        margin: 0;
     }
 
     .document-content pre {
@@ -1173,22 +1207,42 @@ body {
         padding: 20px;
         border-radius: 8px;
         overflow-x: auto;
-        margin: 20px 0;
+        margin: 0;
+        border: none;
     }
 
     .document-content pre code {
         background: none;
         color: inherit;
         padding: 0;
+        margin: 0;
+        border: none;
     }
 
     .document-content ul, .document-content ol {
-        margin: 15px 0;
+        margin: 0;
+        padding: 0;
+        border: none;
         padding-left: 25px;
     }
 
     .document-content li {
-        margin-bottom: 8px;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    .document-content p {
+        margin: 0;
+        padding: 0;
+        border: none;
+        line-height: 1.7;
+    }
+
+    .document-content li {
+        margin: 0;
+        padding: 0;
+        border: none;
     }
 
     .document-content h1 + p,
@@ -2454,8 +2508,7 @@ h3 .fa, h3 .fas, h3 .far {
 .preview-markdown h5,
 .preview-markdown h6 {
     color: #2c3e50;
-    margin-top: 1.5em;
-    margin-bottom: 0;
+    margin: 0;
     padding: 0;
     border: none;
 }
@@ -2463,7 +2516,7 @@ h3 .fa, h3 .fas, h3 .far {
 .preview-markdown h3 {
     color: #2c3e50;
     font-size: 1.1em;
-    margin-bottom: 0;
+    margin: 0;
     line-height: 1.6;
     padding: 0;
     border: none;
@@ -2473,11 +2526,14 @@ h3 .fa, h3 .fas, h3 .far {
     font-size: 2em;
     padding: 0;
     border: none;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 .preview-markdown p {
-    margin-bottom: 1em;
+    margin: 0;
+    padding: 0;
+    border: none;
+    line-height: 1.6;
 }
 
 .preview-markdown h1 + p,
@@ -2496,6 +2552,8 @@ h3 .fa, h3 .fas, h3 .far {
     font-family: 'Courier New', monospace;
     font-size: 0.9em;
     color: #e74c3c;
+    border: none;
+    margin: 0;
 }
 
 .preview-markdown pre {
@@ -2504,22 +2562,29 @@ h3 .fa, h3 .fas, h3 .far {
     border-radius: 5px;
     overflow-x: auto;
     border-left: 4px solid #667eea;
+    margin: 0;
 }
 
 .preview-markdown pre code {
     background: none;
     padding: 0;
     color: #495057;
+    margin: 0;
+    border: none;
 }
 
 .preview-markdown ul,
 .preview-markdown ol {
-    margin-bottom: 1em;
+    margin: 0;
+    padding: 0;
+    border: none;
     padding-left: 20px;
 }
 
 .preview-markdown li {
-    margin-bottom: 0.3em;
+    margin: 0;
+    padding: 0;
+    border: none;
 }
 
 .preview-markdown blockquote {
@@ -2666,8 +2731,7 @@ h3 .fa, h3 .fas, h3 .far {
 .final-preview-markdown h5,
 .final-preview-markdown h6 {
     color: #2c3e50;
-    margin-top: 30px;
-    margin-bottom: 0;
+    margin: 0;
     padding: 0;
     border: none;
 }
@@ -2683,13 +2747,12 @@ h3 .fa, h3 .fas, h3 .far {
     font-size: 2em;
     padding: 0;
     border: none;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 .final-preview-markdown h2 {
     color: #495057;
-    margin-top: 30px;
-    margin-bottom: 0;
+    margin: 0;
     border: none;
     padding: 0;
 }
@@ -2697,14 +2760,17 @@ h3 .fa, h3 .fas, h3 .far {
 .final-preview-markdown h3 {
     color: #495057;
     font-size: 1.1em;
-    margin-bottom: 0;
+    margin: 0;
     line-height: 1.7;
     padding: 0;
     border: none;
 }
 
 .final-preview-markdown p {
-    margin-bottom: 15px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    line-height: 1.7;
 }
 
 .final-preview-markdown h1 + p,
@@ -2723,6 +2789,8 @@ h3 .fa, h3 .fas, h3 .far {
     font-family: 'Courier New', monospace;
     font-size: 0.9em;
     color: inherit;
+    border: none;
+    margin: 0;
 }
 
 .final-preview-markdown pre {
@@ -2731,7 +2799,7 @@ h3 .fa, h3 .fas, h3 .far {
     padding: 20px;
     border-radius: 8px;
     overflow-x: auto;
-    margin: 20px 0;
+    margin: 0;
     border: none;
 }
 
@@ -2739,16 +2807,22 @@ h3 .fa, h3 .fas, h3 .far {
     background: none;
     padding: 0;
     color: inherit;
+    margin: 0;
+    border: none;
 }
 
 .final-preview-markdown ul,
 .final-preview-markdown ol {
-    margin: 15px 0;
+    margin: 0;
+    padding: 0;
+    border: none;
     padding-left: 25px;
 }
 
 .final-preview-markdown li {
-    margin-bottom: 8px;
+    margin: 0;
+    padding: 0;
+    border: none;
 }
 
 .final-preview-markdown blockquote {
