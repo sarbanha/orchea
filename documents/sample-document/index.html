@@ -193,15 +193,37 @@
             const builder = new DocumentBuilder();
             await builder.renderDocument('./config.yaml', 'content');
             
-            // Load version and date info for footer
+            // Load version and date info for footer and update page title
             try {
                 const response = await fetch('./config.yaml');
                 if (response.ok) {
                     const yamlText = await response.text();
                     const config = YAMLParser.parse(yamlText);
                     
+                    // Update footer metadata
                     document.getElementById('document-version').textContent = `v${config.version || '1.0'}`;
                     document.getElementById('document-date').textContent = config.date || 'Unknown date';
+                    
+                    // Update page title in the format: [date] - [title] - [version]
+                    const documentDate = config.date || 'Unknown';
+                    const documentTitle = config.document_title || '{{DOCUMENT_TITLE}}';
+                    const documentVersion = config.version || '1.0';
+                    
+                    // Format date as YYYY-MM-DD if it's not already in that format
+                    let formattedDate = documentDate;
+                    if (documentDate !== 'Unknown') {
+                        try {
+                            const date = new Date(documentDate);
+                            if (!isNaN(date.getTime())) {
+                                formattedDate = date.toISOString().split('T')[0]; // YYYY-MM-DD format
+                            }
+                        } catch (dateError) {
+                            // Keep original date if parsing fails
+                            formattedDate = documentDate;
+                        }
+                    }
+                    
+                    document.title = `${formattedDate} - ${documentTitle} - V${documentVersion}`;
                 }
             } catch (error) {
                 console.error('Error loading footer metadata:', error);
