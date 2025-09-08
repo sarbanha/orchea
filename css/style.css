@@ -1057,7 +1057,7 @@ body {
 
     .document-selector-box {
         background: white;
-        padding: 30px;
+        padding: 40px;
         border-radius: 15px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
@@ -1490,14 +1490,22 @@ body {
         padding-bottom: 15px;
     }
 
-    .document-form {
-        max-width: 800px;
+    .form-section {
+        background: white;
+        padding: 0;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-bottom: 40px;
+        border-bottom: none;
     }
 
-    .form-section {
-        margin-bottom: 20px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #e9ecef;
+    .repository-content-section {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-bottom: 40px;
+        border-bottom: none;
     }
 
     .form-section:last-of-type {
@@ -1505,17 +1513,25 @@ body {
     }
 
     .form-section h4 {
-        color: #495057;
-        margin-bottom: 12px;
-        font-size: 1.3em;
-        display: flex;
-        align-items: center;
+        color: #2c3e50;
+        font-size: 2em;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 600;
+        text-align: center;
+        display: block;
     }
 
     .section-description {
         color: #6c757d;
-        margin-bottom: 10px;
-        font-style: italic;
+        font-size: 1.1em;
+        margin: 0 auto 30px;
+        text-align: center;
+        max-width: 600px;
+        line-height: 1.6;
     }
 
     .form-row {
@@ -1962,7 +1978,6 @@ h3 .fa, h3 .fas, h3 .far {
     
     .document-form {
         width: 100%;
-        max-width: 100%;
         box-sizing: border-box;
     }
     
@@ -2361,11 +2376,54 @@ h3 .fa, h3 .fas, h3 .far {
 
 /* Enhanced Document Edit Page Styles */
 .content-selection-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    margin-bottom: 15px;
-    align-items: stretch;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 30px !important;
+    margin-bottom: 15px !important;
+    align-items: stretch !important;
+    width: 100% !important;
+}
+
+/* Ensure form-section content-selection-grid also gets the grid layout with higher specificity */
+.form-section.content-selection-container .content-selection-grid,
+.form-section .content-selection-grid,
+div.form-section div.content-selection-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 30px !important;
+    margin-bottom: 15px !important;
+    align-items: stretch !important;
+    width: 100% !important;
+}
+
+/* Match repository page form-section styling exactly - no padding */
+.form-section.content-selection-container {
+    background: white;
+    padding: 0;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+    border-bottom: none;
+}
+
+/* Match repository page content-selection-grid styling exactly */
+.form-section.content-selection-container .content-selection-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 30px !important;
+    margin: 20px 0 40px 0 !important; /* Match repository page margins */
+    align-items: stretch !important;
+    width: 100% !important;
+}
+
+/* Apply content-selection-grid styling to other form-section variants */
+.form-section.content-structure-section {
+    display: block;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
 }
 
 .file-selection-panel,
@@ -2390,11 +2448,13 @@ h3 .fa, h3 .fas, h3 .far {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 70px;
+    box-sizing: border-box;
 }
 
 .file-count {
     background: rgba(255, 255, 255, 0.2);
-    padding: 4px 10px;
+    padding: 0 10px;
     border-radius: 15px;
     font-size: 0.9em;
     font-weight: 500;
