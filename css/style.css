@@ -2669,6 +2669,43 @@ div.form-section div.content-selection-grid {
     opacity: 0.5;
 }
 
+/* File Label Information Styles */
+.file-label-info {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e9ecef;
+}
+
+.label-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #6c757d;
+    font-size: 0.9em;
+    flex-wrap: wrap;
+}
+
+.label-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.last-update {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    font-style: italic;
+}
+
+.last-update i {
+    opacity: 0.7;
+}
+
 .loading-preview {
     text-align: center;
     color: #667eea;

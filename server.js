@@ -29,16 +29,71 @@ app.use(express.json());
 
 // API Routes
 
+// Auto-creation state to prevent multiple simultaneous processes
+let isAutoCreating = false;
+
 // Get list of files in repository
 app.get('/api/files', async (req, res) => {
     try {
         const repositoryPath = path.join(__dirname, 'repository');
         const files = await fs.readdir(repositoryPath);
         const markdownFiles = files.filter(file => file.endsWith('.md'));
+        
+        // Auto-create missing YAML configs for all markdown files (only once at a time)
+        const autoCreate = req.query.autoCreateConfigs === 'true';
+        if (autoCreate && !isAutoCreating) {
+            isAutoCreating = true;
+            console.log('Auto-creating missing YAML configs for all markdown files...');
+            
+            let createdCount = 0;
+            for (const mdFile of markdownFiles) {
+                const configFilename = mdFile.replace('.md', '.yaml');
+                const configPath = path.join(repositoryPath, configFilename);
+                
+                try {
+                    await fs.access(configPath);
+                    // Config exists, skip
+                } catch (configError) {
+                    // Config doesn't exist, create it
+                    console.log(`Creating missing YAML config for ${mdFile}`);
+                    
+                    const defaultTitle = mdFile.replace('.md', '').replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase());
+                    const defaultLabel = 'Document';
+                    const currentDateTime = new Date().toISOString();
+                    
+                    const yamlContent = `# File Configuration
+title: "${defaultTitle}"
+label: "${defaultLabel}"
+lastUpdate: "${currentDateTime}"
+`;
+                    
+                    try {
+                        await fs.writeFile(configPath, yamlContent, 'utf8');
+                        console.log(`YAML config created: ${configFilename}`);
+                        createdCount++;
+                    } catch (yamlError) {
+                        console.error(`Failed to create YAML config for ${mdFile}:`, yamlError);
+                    }
+                }
+            }
+            
+            if (createdCount > 0) {
+                console.log(`Auto-creation complete: ${createdCount} YAML configs created`);
+            } else {
+                console.log('Auto-creation complete: All YAML configs already exist');
+            }
+            
+            isAutoCreating = false;
+        } else if (autoCreate && isAutoCreating) {
+            console.log('Auto-creation already in progress, skipping duplicate request');
+        }
+        
         res.json({ files: markdownFiles });
     } catch (error) {
         console.error('Error reading repository:', error);
         res.status(500).json({ error: 'Failed to read repository' });
+    } finally {
+        isAutoCreating = false;
     }
 });
 
@@ -47,12 +102,46 @@ app.get('/api/files/:filename', async (req, res) => {
     try {
         const filename = req.params.filename;
         
-        // Security check: only allow .md files and prevent path traversal
-        if (!filename.endsWith('.md') || filename.includes('..') || filename.includes('/')) {
-            return res.status(400).json({ error: 'Invalid filename' });
+        // Security check: allow .md and .yaml files and prevent path traversal
+        if ((!filename.endsWith('.md') && !filename.endsWith('.yaml')) || filename.includes('..') || filename.includes('/')) {
+            return res.status(400).json({ error: 'Invalid filename - only .md and .yaml files allowed' });
         }
 
         const filePath = path.join(__dirname, 'repository', filename);
+        
+        // If requesting a markdown file, ensure its YAML config exists
+        if (filename.endsWith('.md')) {
+            const configFilename = filename.replace('.md', '.yaml');
+            const configPath = path.join(__dirname, 'repository', configFilename);
+            
+            try {
+                await fs.access(configPath);
+                console.log(`YAML config exists for ${filename}`);
+            } catch (configError) {
+                // YAML config doesn't exist, create it
+                console.log(`Creating missing YAML config for ${filename}`);
+                
+                // Generate default title and label from filename
+                const defaultTitle = filename.replace('.md', '').replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase());
+                const defaultLabel = 'Document';
+                const currentDateTime = new Date().toISOString();
+                
+                const yamlContent = `# File Configuration
+title: "${defaultTitle}"
+label: "${defaultLabel}"
+lastUpdate: "${currentDateTime}"
+`;
+                
+                try {
+                    await fs.writeFile(configPath, yamlContent, 'utf8');
+                    console.log(`YAML config created successfully: ${configFilename}`);
+                } catch (yamlError) {
+                    console.error(`Failed to create YAML config for ${filename}:`, yamlError);
+                    // Continue anyway - don't block reading the markdown file
+                }
+            }
+        }
+        
         const content = await fs.readFile(filePath, 'utf8');
         res.json({ content, filename });
     } catch (error) {
@@ -71,9 +160,9 @@ app.put('/api/files/:filename', async (req, res) => {
         const filename = req.params.filename;
         const { content } = req.body;
 
-        // Security check: only allow .md files and prevent path traversal
-        if (!filename.endsWith('.md') || filename.includes('..') || filename.includes('/')) {
-            return res.status(400).json({ error: 'Invalid filename' });
+        // Security check: allow .md and .yaml files and prevent path traversal
+        if ((!filename.endsWith('.md') && !filename.endsWith('.yaml')) || filename.includes('..') || filename.includes('/')) {
+            return res.status(400).json({ error: 'Invalid filename - only .md and .yaml files allowed' });
         }
 
         if (typeof content !== 'string') {
@@ -82,13 +171,15 @@ app.put('/api/files/:filename', async (req, res) => {
 
         const filePath = path.join(__dirname, 'repository', filename);
         
-        // Create backup of original file
-        try {
-            const originalContent = await fs.readFile(filePath, 'utf8');
-            const backupPath = path.join(__dirname, 'repository', `.${filename}.backup`);
-            await fs.writeFile(backupPath, originalContent, 'utf8');
-        } catch (backupError) {
-            console.log('No existing file to backup or backup failed:', backupError.message);
+        // Create backup of original file (only for .md files to avoid cluttering with .yaml backups)
+        if (filename.endsWith('.md')) {
+            try {
+                const originalContent = await fs.readFile(filePath, 'utf8');
+                const backupPath = path.join(__dirname, 'repository', `.${filename}.backup`);
+                await fs.writeFile(backupPath, originalContent, 'utf8');
+            } catch (backupError) {
+                console.log('No existing file to backup or backup failed:', backupError.message);
+            }
         }
 
         // Save the new content
@@ -112,9 +203,9 @@ app.post('/api/files', async (req, res) => {
     try {
         const { filename, content = '' } = req.body;
 
-        // Security check: only allow .md files and prevent path traversal
-        if (!filename || !filename.endsWith('.md') || filename.includes('..') || filename.includes('/')) {
-            return res.status(400).json({ error: 'Invalid filename' });
+        // Security check: allow .md and .yaml files and prevent path traversal
+        if (!filename || (!filename.endsWith('.md') && !filename.endsWith('.yaml')) || filename.includes('..') || filename.includes('/')) {
+            return res.status(400).json({ error: 'Invalid filename - only .md and .yaml files allowed' });
         }
 
         const filePath = path.join(__dirname, 'repository', filename);
@@ -128,6 +219,39 @@ app.post('/api/files', async (req, res) => {
         }
 
         await fs.writeFile(filePath, content, 'utf8');
+        
+        // If creating a markdown file, automatically create its YAML config
+        if (filename.endsWith('.md')) {
+            const configFilename = filename.replace('.md', '.yaml');
+            const configPath = path.join(__dirname, 'repository', configFilename);
+            
+            // Check if YAML config already exists
+            try {
+                await fs.access(configPath);
+                console.log(`YAML config already exists for ${filename}`);
+            } catch (configError) {
+                // Create YAML config
+                console.log(`Auto-creating YAML config for new file: ${filename}`);
+                
+                const defaultTitle = filename.replace('.md', '').replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase());
+                const defaultLabel = 'Document';
+                const currentDateTime = new Date().toISOString();
+                
+                const yamlContent = `# File Configuration
+title: "${defaultTitle}"
+label: "${defaultLabel}"
+lastUpdate: "${currentDateTime}"
+`;
+                
+                try {
+                    await fs.writeFile(configPath, yamlContent, 'utf8');
+                    console.log(`YAML config created successfully: ${configFilename}`);
+                } catch (yamlError) {
+                    console.error(`Failed to create YAML config for ${filename}:`, yamlError);
+                    // Don't fail the main file creation
+                }
+            }
+        }
         
         console.log(`New file created: ${filename}`);
         res.json({ 
@@ -147,9 +271,9 @@ app.delete('/api/files/:filename', async (req, res) => {
     try {
         const filename = req.params.filename;
 
-        // Security check: only allow .md files and prevent path traversal
-        if (!filename.endsWith('.md') || filename.includes('..') || filename.includes('/')) {
-            return res.status(400).json({ error: 'Invalid filename' });
+        // Security check: allow .md and .yaml files and prevent path traversal
+        if ((!filename.endsWith('.md') && !filename.endsWith('.yaml')) || filename.includes('..') || filename.includes('/')) {
+            return res.status(400).json({ error: 'Invalid filename - only .md and .yaml files allowed' });
         }
 
         const filePath = path.join(__dirname, 'repository', filename);

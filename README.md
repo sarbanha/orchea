@@ -1,11 +1,27 @@
 # Orchea - Modular Documentation System
 
-A modern Vue.js web application for creating and managing documentation from modular Markdown snippets with YAML-based configuration. Build professional documents by combining reusable content blocks through an intuitive web interface.
+A modern Vue.js web application for creating and managing documentation from modular Markdown snippets with comprehensive YAML-based configuration. Build professional documents by combining reusable content blocks through an intuitive web interface with rich metadata management.
+
+## New Features (v2.0)
+
+* **File Metadata System**: Each markdown file now has title, label, and timestamp metadata
+* **Auto-Configuration**: Automatic YAML config generation for missing file metadata  
+* **Smart Display**: Meaningful titles shown instead of technical filenames throughout the UI
+* **Enhanced Repository**: Rich file management with metadata editing and display
+* **Dual File System**: Seamless handling of both markdown content and YAML configurations
+* **Optimized Performance**: Efficient loading and caching of file configurations
+* **Consistent Styling**: Unified visual experience across all pages and components
 
 ## Directory Structure
 
 ```
 Orchea/
+├── repository/             # Markdown content files with YAML configs
+│   ├── intro.md           # Markdown content
+│   ├── intro.yaml         # File metadata (title, label, date)
+│   ├── getting-started.md
+│   ├── getting-started.yaml
+│   └── ...
 ├── templates/              # Document templates
 │   └── document-index.html # Master template for documents
 └── documents/              # Generated document directories
@@ -26,33 +42,42 @@ Orchea/
 
 ### **Content Management**
 
-* **Repository Browser**: Manage all Markdown files in a centralized repository
-* **File Editor**: Built-in editor for creating and modifying Markdown content
+* **Repository Browser**: Manage all Markdown files with rich metadata display
+* **File Editor**: Built-in EasyMDE editor for creating and modifying Markdown content
+* **YAML Configuration**: Each markdown file includes title, label, and update metadata
+* **Smart Display**: File lists show meaningful titles instead of technical filenames
 * **Drag & Drop**: Intuitive interface for selecting and ordering document content
-* **Real-time Preview**: Live preview of Markdown content as you type
-* **File Operations**: Create, edit, save, and delete Markdown files
+* **Real-time Preview**: Live preview of Markdown content with metadata information
+* **File Operations**: Create, edit, save, and delete Markdown files with auto-config generation
 
 ### **Configuration System**
 
-* **YAML-based**: Simple YAML configuration for document metadata
+* **YAML-based**: Dual YAML configuration system for both documents and individual files
+* **Auto-Configuration**: Automatic YAML config generation for missing markdown files
+* **File Metadata**: Each markdown file has title, label, and timestamp metadata
 * **Template Engine**: Centralized template system for consistent document styling
 * **Version Control**: Track document versions and publication dates
-* **Metadata Management**: Document titles, versions, dates, and file lists
+* **Metadata Management**: Document titles, versions, dates, and comprehensive file metadata
 
 ### **Modern Interface**
 
 * **Vue.js Frontend**: Reactive, component-based user interface
 * **Responsive Design**: Works seamlessly on desktop and mobile devices
-* **Professional Styling**: Clean, modern design with gradient themes
+* **Professional Styling**: Clean, modern design with gradient themes and consistent layouts
 * **Drag & Drop UI**: Visual content selection and reordering
-* **Loading States**: Clear feedback during operations
+* **Rich Metadata Display**: File titles, labels, and timestamps throughout the interface
+* **Smart File Lists**: Meaningful names instead of technical filenames
+* **Loading States**: Clear feedback during operations with progress indicators
+* **Consistent Experience**: Unified styling across repository, new document, and edit pages
 
 ### **Backend API**
 
 * **Node.js Server**: Full-featured backend with RESTful API
-* **File Operations**: Secure file reading, writing, and management
+* **File Operations**: Secure file reading, writing, and management for both .md and .yaml files
+* **Auto-Configuration**: Automatic YAML config creation for missing file metadata
 * **Document CRUD**: Complete Create, Read, Update, Delete operations
 * **Template Processing**: Dynamic template rendering and variable substitution
+* **Dual File Support**: Seamless handling of markdown content and YAML configurations
 * **Error Handling**: Comprehensive error reporting and validation
 
 ## Getting Started
@@ -117,16 +142,20 @@ The Node.js server provides:
 
 1. **Repository Management**:
 
-   * Visit the Repository page to manage Markdown files
-   * Create new files with the built-in editor
-   * Edit existing content with live preview
-   * Delete unused files (with confirmation)
+   * Visit the Repository page to manage Markdown files with rich metadata
+   * Files display with meaningful titles instead of technical filenames
+   * Create new files with automatic YAML configuration generation
+   * Edit both content and metadata (title, label) simultaneously
+   * View file labels and last update timestamps
+   * Delete unused files with automatic cleanup of associated YAML configs
 
 2. **File Organization**:
 
    * Keep related content in focused Markdown files
-   * Use descriptive filenames (e.g., `installation-guide.md`)
-   * Maintain consistent formatting across files
+   * Use descriptive filenames (automatically converted to readable titles)
+   * Assign meaningful labels (Guide, Tutorial, Reference, API, etc.)
+   * System maintains both technical filenames and user-friendly titles
+   * Automatic timestamp tracking for content management
 
 ### **Viewing Documents**
 
@@ -135,7 +164,27 @@ The Node.js server provides:
 3. **Full Document**: Open complete documents in new tabs for presentation
 4. **Download**: Export documents as combined Markdown files for external use
 
-## Document Configuration
+## Configuration System
+
+### File-Level Configuration
+
+Each Markdown file in the repository has an accompanying YAML configuration file that stores metadata:
+
+```yaml
+# File Configuration (e.g., intro.yaml)
+title: "Introduction to Orchea"
+label: "Guide"
+lastUpdate: "2025-09-09T00:14:32.464Z"
+```
+
+**Features:**
+* **Auto-Generation**: Missing YAML configs are automatically created
+* **Smart Titles**: Filenames converted to readable titles (e.g., `getting-started.md` → "Getting Started")
+* **Categorization**: Label system for organizing content types (Guide, Tutorial, Reference, etc.)
+* **Timestamp Tracking**: Automatic last update tracking for content management
+* **Fallback Support**: System works even if YAML files are missing or corrupted
+
+### Document Configuration
 
 ### YAML Structure
 
@@ -175,11 +224,17 @@ Documents are generated from a master template (`templates/document-index.html`)
 
 ### File Operations
 
-* `GET /api/files` – List repository files
-* `GET /api/files/:filename` – Get file content
-* `PUT /api/files/:filename` – Update file content
-* `POST /api/files` – Create new file
-* `DELETE /api/files/:filename` – Delete file
+* `GET /api/files` – List repository files (supports `?autoCreateConfigs=true`)
+* `GET /api/files/:filename` – Get file content (supports both .md and .yaml files)
+* `PUT /api/files/:filename` – Update file content (handles dual file system)
+* `POST /api/files` – Create new file (auto-creates YAML config)
+* `DELETE /api/files/:filename` – Delete file (cleans up associated configs)
+
+**Enhanced Features:**
+* **Automatic YAML Generation**: Missing configurations created on-the-fly
+* **Dual File Support**: Seamless handling of markdown content and metadata
+* **Smart Fallbacks**: System works even with missing or corrupted configs
+* **Bulk Operations**: Efficient handling of multiple file operations
 
 ## Development
 
