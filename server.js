@@ -234,12 +234,12 @@ app.post('/api/files', async (req, res) => {
                 console.log(`Auto-creating YAML config for new file: ${filename}`);
                 
                 const defaultTitle = filename.replace('.md', '').replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase());
-                const defaultLabel = 'Document';
+                const defaultLabels = ['Document'];
                 const currentDateTime = new Date().toISOString();
                 
                 const yamlContent = `# File Configuration
 title: "${defaultTitle}"
-label: "${defaultLabel}"
+labels: [${defaultLabels.map(label => `"${label}"`).join(', ')}]
 lastUpdate: "${currentDateTime}"
 `;
                 
@@ -585,6 +585,179 @@ app.get('/api/documents', async (req, res) => {
 app.use(express.static('./'));
 
 // Health check endpoint
+// Get all tags from YAML configurations
+app.get('/api/tags', async (req, res) => {
+    try {
+        const repositoryPath = path.join(__dirname, 'repository');
+        const files = await fs.readdir(repositoryPath);
+        const yamlFiles = files.filter(file => file.endsWith('.yaml'));
+        
+        const tagsMap = new Map();
+        const tagStats = {
+            total: 0,
+            files: 0,
+            labels: new Set(),
+            usage: new Map()
+        };
+
+        for (const yamlFile of yamlFiles) {
+            const yamlPath = path.join(repositoryPath, yamlFile);
+            
+            try {
+                const yamlContent = await fs.readFile(yamlPath, 'utf8');
+                const config = parseYAML(yamlContent);
+                
+                // Support both single label (legacy) and labels array (new format)
+                const labelsToProcess = [];
+                if (config.labels && Array.isArray(config.labels)) {
+                    labelsToProcess.push(...config.labels);
+                } else if (config.label) {
+                    labelsToProcess.push(config.label);
+                }
+                
+                for (const labelItem of labelsToProcess) {
+                    if (labelItem) {
+                        const label = labelItem.toLowerCase();
+                        const displayLabel = labelItem;
+                        
+                        // Track label usage
+                        if (tagsMap.has(label)) {
+                            tagsMap.get(label).count++;
+                            tagsMap.get(label).files.push(yamlFile.replace('.yaml', '.md'));
+                        } else {
+                            tagsMap.set(label, {
+                                label: displayLabel,
+                                count: 1,
+                                files: [yamlFile.replace('.yaml', '.md')]
+                            });
+                        }
+                        
+                        tagStats.labels.add(displayLabel);
+                        tagStats.total++;
+                    }
+                }
+                tagStats.files++;
+                
+            } catch (fileError) {
+                console.warn(`Could not parse YAML file ${yamlFile}:`, fileError.message);
+            }
+        }
+        
+        // Convert map to array and sort by usage count
+        const tags = Array.from(tagsMap.values()).sort((a, b) => b.count - a.count);
+        
+        res.json({
+            tags,
+            stats: {
+                totalTags: tagStats.total,
+                uniqueLabels: tagStats.labels.size,
+                filesProcessed: tagStats.files
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error analyzing tags:', error);
+        res.status(500).json({ error: 'Failed to analyze tags' });
+    }
+});
+
+// Update YAML configuration for a markdown file
+app.put('/api/files/:filename/config', async (req, res) => {
+    try {
+        const filename = req.params.filename;
+        const { title, labels } = req.body;
+
+        // Security check: only allow .md files
+        if (!filename.endsWith('.md') || filename.includes('..') || filename.includes('/')) {
+            return res.status(400).json({ error: 'Invalid filename - only .md files allowed' });
+        }
+
+        if (!title || !labels) {
+            return res.status(400).json({ error: 'Title and labels are required' });
+        }
+
+        // Convert comma-delimited string to array if needed
+        let labelsArray;
+        if (typeof labels === 'string') {
+            labelsArray = labels.split(',').map(label => label.trim()).filter(label => label.length > 0);
+        } else if (Array.isArray(labels)) {
+            labelsArray = labels.filter(label => label && typeof label === 'string' && label.trim().length > 0);
+        } else {
+            return res.status(400).json({ error: 'Labels must be a string or array' });
+        }
+
+        if (labelsArray.length === 0) {
+            return res.status(400).json({ error: 'At least one label is required' });
+        }
+
+        const configFilename = filename.replace('.md', '.yaml');
+        const configPath = path.join(__dirname, 'repository', configFilename);
+        const currentDateTime = new Date().toISOString();
+        
+        const yamlContent = `# File Configuration
+title: "${title}"
+labels: [${labelsArray.map(label => `"${label}"`).join(', ')}]
+lastUpdate: "${currentDateTime}"
+`;
+
+        await fs.writeFile(configPath, yamlContent, 'utf8');
+        
+        console.log(`YAML config updated: ${configFilename}`);
+        res.json({ 
+            success: true, 
+            message: 'Configuration updated successfully',
+            filename: configFilename,
+            config: {
+                title,
+                labels: labelsArray,
+                lastUpdate: currentDateTime
+            }
+        });
+    } catch (error) {
+        console.error('Error updating YAML config:', error);
+        res.status(500).json({ error: 'Failed to update configuration' });
+    }
+});
+
+// Simple YAML parser function for tag analysis
+function parseYAML(yamlContent) {
+    const config = {};
+    if (!yamlContent) return config;
+    
+    const lines = yamlContent.split('\n');
+    
+    lines.forEach(line => {
+        line = line.trim();
+        if (line && !line.startsWith('#')) {
+            const colonIndex = line.indexOf(':');
+            if (colonIndex > 0) {
+                const key = line.substring(0, colonIndex).trim();
+                let value = line.substring(colonIndex + 1).trim();
+                
+                if (key && value) {
+                    // Handle array format: labels: ["tag1", "tag2", "tag3"]
+                    if (value.startsWith('[') && value.endsWith(']')) {
+                        const arrayContent = value.slice(1, -1).trim();
+                        if (arrayContent) {
+                            const arrayItems = arrayContent.split(',').map(item => 
+                                item.trim().replace(/^["']|["']$/g, '')
+                            ).filter(item => item.length > 0);
+                            config[key.toLowerCase()] = arrayItems;
+                        } else {
+                            config[key.toLowerCase()] = [];
+                        }
+                    } else {
+                        // Handle single value
+                        config[key.toLowerCase()] = value.replace(/^["']|["']$/g, '');
+                    }
+                }
+            }
+        }
+    });
+    
+    return config;
+}
+
 app.get('/api/health', (req, res) => {
     res.json({ 
         status: 'OK', 
