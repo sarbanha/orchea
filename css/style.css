@@ -2522,6 +2522,57 @@ div.form-section div.content-selection-grid {
     font-weight: 600;
 }
 
+/* File Action Buttons */
+.file-actions {
+    display: flex;
+    gap: 5px;
+    margin-left: auto;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.btn-edit {
+    color: #007bff;
+}
+
+.btn-edit:hover {
+    background: rgba(0, 123, 255, 0.1);
+    color: #0056b3;
+}
+
+.btn-duplicate {
+    color: #6f42c1;
+}
+
+.btn-duplicate:hover {
+    background: rgba(111, 66, 193, 0.1);
+    color: #5a32a3;
+}
+
+.btn-delete {
+    color: #dc3545;
+}
+
+.btn-delete:hover {
+    background: rgba(220, 53, 69, 0.1);
+    color: #c82333;
+}
+
 .file-preview-content {
     padding: 20px;
     min-height: 300px;
