@@ -719,6 +719,142 @@ lastUpdate: "${currentDateTime}"
     }
 });
 
+// Search through repository files (markdown content and YAML metadata)
+app.get('/api/search', async (req, res) => {
+    try {
+        const { q: query, limit = 50 } = req.query;
+        
+        if (!query || query.trim().length === 0) {
+            return res.json({ results: [], query: '', totalResults: 0 });
+        }
+        
+        const searchTerm = query.trim().toLowerCase();
+        const results = [];
+        const repositoryPath = path.join(__dirname, 'repository');
+        
+        // Get all files in repository
+        const files = await fs.readdir(repositoryPath);
+        const markdownFiles = files.filter(file => file.endsWith('.md'));
+        
+        for (const markdownFile of markdownFiles) {
+            const filePath = path.join(repositoryPath, markdownFile);
+            const configFile = markdownFile.replace('.md', '.yaml');
+            const configPath = path.join(repositoryPath, configFile);
+            
+            let matchScore = 0;
+            let matchedIn = [];
+            let fileTitle = markdownFile.replace('.md', '').replace(/-/g, ' ');
+            let fileLabels = [];
+            let excerpt = '';
+            
+            try {
+                // Search in YAML metadata
+                try {
+                    const yamlContent = await fs.readFile(configPath, 'utf8');
+                    const config = parseYAML(yamlContent);
+                    
+                    // Get title and labels from config
+                    if (config.title) {
+                        fileTitle = config.title;
+                        if (config.title.toLowerCase().includes(searchTerm)) {
+                            matchScore += 10; // High score for title matches
+                            matchedIn.push('title');
+                        }
+                    }
+                    
+                    // Handle both single label and labels array
+                    if (config.labels && Array.isArray(config.labels)) {
+                        fileLabels = config.labels;
+                        for (const label of config.labels) {
+                            if (label.toLowerCase().includes(searchTerm)) {
+                                matchScore += 5; // Medium score for label matches
+                                matchedIn.push('labels');
+                                break;
+                            }
+                        }
+                    } else if (config.label) {
+                        fileLabels = [config.label];
+                        if (config.label.toLowerCase().includes(searchTerm)) {
+                            matchScore += 5;
+                            matchedIn.push('labels');
+                        }
+                    }
+                } catch (yamlError) {
+                    // YAML file doesn't exist or is invalid, continue with markdown search
+                }
+                
+                // Search in markdown content
+                const markdownContent = await fs.readFile(filePath, 'utf8');
+                const contentLower = markdownContent.toLowerCase();
+                
+                if (contentLower.includes(searchTerm)) {
+                    // Count occurrences in content
+                    const occurrences = (contentLower.match(new RegExp(searchTerm, 'g')) || []).length;
+                    matchScore += occurrences; // Score based on frequency
+                    matchedIn.push('content');
+                    
+                    // Create excerpt around first match
+                    const firstMatchIndex = contentLower.indexOf(searchTerm);
+                    const start = Math.max(0, firstMatchIndex - 50);
+                    const end = Math.min(markdownContent.length, firstMatchIndex + searchTerm.length + 50);
+                    excerpt = markdownContent.substring(start, end).trim();
+                    
+                    // Highlight the search term in excerpt
+                    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                    excerpt = excerpt.replace(regex, '**$1**');
+                }
+                
+                // Also check filename
+                if (markdownFile.toLowerCase().includes(searchTerm)) {
+                    matchScore += 3;
+                    matchedIn.push('filename');
+                }
+                
+                // If there's any match, add to results
+                if (matchScore > 0) {
+                    results.push({
+                        filename: markdownFile,
+                        title: fileTitle,
+                        labels: fileLabels,
+                        matchScore,
+                        matchedIn: [...new Set(matchedIn)], // Remove duplicates
+                        excerpt: excerpt || `${fileTitle} - ${fileLabels.join(', ')}`,
+                        lastUpdate: new Date().toISOString() // Could be enhanced with actual file dates
+                    });
+                }
+                
+            } catch (error) {
+                console.error(`Error searching in ${markdownFile}:`, error);
+                continue;
+            }
+        }
+        
+        // Sort by match score (highest first), then by title
+        results.sort((a, b) => {
+            if (b.matchScore !== a.matchScore) {
+                return b.matchScore - a.matchScore;
+            }
+            return a.title.localeCompare(b.title);
+        });
+        
+        // Apply limit
+        const limitedResults = results.slice(0, parseInt(limit));
+        
+        console.log(`Search for "${query}" found ${results.length} results`);
+        
+        res.json({
+            results: limitedResults,
+            query: query,
+            totalResults: results.length,
+            hasMore: results.length > parseInt(limit)
+        });
+        
+    } catch (error) {
+        console.error('Error performing search:', error);
+        res.status(500).json({ error: 'Search failed' });
+    }
+});
+
 // Simple YAML parser function for tag analysis
 function parseYAML(yamlContent) {
     const config = {};
