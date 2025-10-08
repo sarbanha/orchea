@@ -330,16 +330,18 @@ body {
 
 .preview-content h3 {
     color: #495057 !important;
-    font-size: 1.1em !important;
-    margin: 0;
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    margin: 0 !important;
     line-height: 1.7 !important;
-    padding: 0;
-    border: none;
+    padding: 0 !important;
+    border: none !important;
 }
 
 .preview-content h4 {
     color: #495057 !important;
-    font-size: 1.0em !important;
+    font-size: 1.1em !important;
+    font-weight: bold !important;
     margin: 0 !important;
     line-height: 1.7 !important;
     padding: 0 !important;
@@ -347,7 +349,6 @@ body {
     background: none !important;
     -webkit-text-fill-color: initial !important;
     background-clip: initial !important;
-    font-weight: normal !important;
     text-align: left !important;
 }
 
@@ -439,21 +440,23 @@ body {
 }
 
 .content-section h3 {
-    color: #34495e;
-    font-size: 1.1em;
-    margin: 0;
-    line-height: 1.7;
-    padding: 0;
-    border: none;
+    color: #495057 !important;
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    margin: 0 !important;
+    line-height: 1.7 !important;
+    padding: 0 !important;
+    border: none !important;
 }
 
 .content-section h4 {
-    color: #34495e;
-    font-size: 1.0em;
-    margin: 0;
-    line-height: 1.7;
-    padding: 0;
-    border: none;
+    color: #495057 !important;
+    font-size: 1.1em !important;
+    font-weight: bold !important;
+    margin: 0 !important;
+    line-height: 1.7 !important;
+    padding: 0 !important;
+    border: none !important;
 }
 
 .content-section p {
@@ -1270,21 +1273,23 @@ body {
     }
 
     .document-content h3 {
-        color: #495057;
-        font-size: 1.1em;
-        margin: 0;
-        line-height: 1.7;
-        padding: 0;
-        border: none;
+        color: #495057 !important;
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        margin: 0 !important;
+        line-height: 1.7 !important;
+        padding: 0 !important;
+        border: none !important;
     }
 
     .document-content h4 {
-        color: #495057;
-        font-size: 1.0em;
-        margin: 0;
-        line-height: 1.7;
-        padding: 0;
-        border: none;
+        color: #495057 !important;
+        font-size: 1.1em !important;
+        font-weight: bold !important;
+        margin: 0 !important;
+        line-height: 1.7 !important;
+        padding: 0 !important;
+        border: none !important;
     }
 
     .document-content code {
@@ -2722,16 +2727,18 @@ div.form-section div.content-selection-grid {
 
 .preview-markdown h3 {
     color: #495057 !important;
-    font-size: 1.1em !important;
-    margin: 0;
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    margin: 0 !important;
     line-height: 1.7 !important;
-    padding: 0;
-    border: none;
+    padding: 0 !important;
+    border: none !important;
 }
 
 .preview-markdown h4 {
     color: #495057 !important;
-    font-size: 1.0em !important;
+    font-size: 1.1em !important;
+    font-weight: bold !important;
     margin: 0 !important;
     line-height: 1.7 !important;
     padding: 0 !important;
@@ -2739,7 +2746,6 @@ div.form-section div.content-selection-grid {
     background: none !important;
     -webkit-text-fill-color: initial !important;
     background-clip: initial !important;
-    font-weight: normal !important;
     text-align: left !important;
 }
 
@@ -3107,17 +3113,19 @@ div.form-section div.content-selection-grid {
 }
 
 .final-preview-markdown h3 {
-    color: #495057;
-    font-size: 1.1em;
-    margin: 0;
-    line-height: 1.7;
-    padding: 0;
-    border: none;
+    color: #495057 !important;
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    margin: 0 !important;
+    line-height: 1.7 !important;
+    padding: 0 !important;
+    border: none !important;
 }
 
 .final-preview-markdown h4 {
     color: #495057 !important;
-    font-size: 1.0em !important;
+    font-size: 1.1em !important;
+    font-weight: bold !important;
     margin: 0 !important;
     line-height: 1.7 !important;
     padding: 0 !important;
@@ -3125,7 +3133,6 @@ div.form-section div.content-selection-grid {
     background: none !important;
     -webkit-text-fill-color: initial !important;
     background-clip: initial !important;
-    font-weight: normal !important;
     text-align: left !important;
 }
 
