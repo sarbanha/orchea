@@ -329,15 +329,28 @@ body {
 }
 
 .preview-content h3 {
-    color: #34495e;
-    font-size: 1.1em;
+    color: #495057 !important;
+    font-size: 1.1em !important;
     margin: 0;
-    line-height: 1.7;
+    line-height: 1.7 !important;
     padding: 0;
     border: none;
 }
 
-.preview-content h4,
+.preview-content h4 {
+    color: #495057 !important;
+    font-size: 1.0em !important;
+    margin: 0 !important;
+    line-height: 1.7 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    background-clip: initial !important;
+    font-weight: normal !important;
+    text-align: left !important;
+}
+
 .preview-content h5,
 .preview-content h6 {
     color: #34495e;
@@ -436,7 +449,9 @@ body {
 
 .content-section h4 {
     color: #34495e;
+    font-size: 1.0em;
     margin: 0;
+    line-height: 1.7;
     padding: 0;
     border: none;
 }
@@ -1257,6 +1272,15 @@ body {
     .document-content h3 {
         color: #495057;
         font-size: 1.1em;
+        margin: 0;
+        line-height: 1.7;
+        padding: 0;
+        border: none;
+    }
+
+    .document-content h4 {
+        color: #495057;
+        font-size: 1.0em;
         margin: 0;
         line-height: 1.7;
         padding: 0;
@@ -2697,12 +2721,26 @@ div.form-section div.content-selection-grid {
 }
 
 .preview-markdown h3 {
-    color: #2c3e50;
-    font-size: 1.1em;
+    color: #495057 !important;
+    font-size: 1.1em !important;
     margin: 0;
-    line-height: 1.6;
+    line-height: 1.7 !important;
     padding: 0;
     border: none;
+}
+
+.preview-markdown h4 {
+    color: #495057 !important;
+    font-size: 1.0em !important;
+    margin: 0 !important;
+    line-height: 1.7 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    background-clip: initial !important;
+    font-weight: normal !important;
+    text-align: left !important;
 }
 
 .preview-markdown h1 {
@@ -3075,6 +3113,20 @@ div.form-section div.content-selection-grid {
     line-height: 1.7;
     padding: 0;
     border: none;
+}
+
+.final-preview-markdown h4 {
+    color: #495057 !important;
+    font-size: 1.0em !important;
+    margin: 0 !important;
+    line-height: 1.7 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    background-clip: initial !important;
+    font-weight: normal !important;
+    text-align: left !important;
 }
 
 .final-preview-markdown p {
